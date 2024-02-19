@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding:0;
+            margin:0;
+        }
+        .clearfix::after,
+        .clearfix::before{
+            content: "";
+            display: table;
+            clear: both;
+        }
+        .container{
+            border: 10px solid #3ebbfd;
+            margin: 10px auto;
+            width: 800px;
+            height: 650px;
+            background-color: #d3e9ff;
+        }
+        .content{
+            overflow-y: scroll;
+            margin: 20px auto;
+            width: 765px;
+            height: 500px;
+            background-color: #fff;
+            display:flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        .content::-webkit-scrollbar-thumb{
+            border-radius: 3px;;
+        }
+        input{
+            margin-left: 25px;
+            width: 600px;
+            height: 30px;
+        }
+        button{
+            width: 60px;
+            height: 35px;
+        }
+        .myself{
+            /* margin:20px; */
+            display: flex;
+            white-space: pre-line;
+            
+           
+        }
+        .head{
+            width:50px;
+            height:50px;
+            background-color: #baf;
+            border:1px solid red;
+            border-radius: 50%;
+            margin:10px;
+            background-image: url(../);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .mySpeech{
+            margin:10px ;
+            color:black; 
+            background-color: #d3e9ff;
+            max-width: 500px;
+            min-height:30px;
+            text-align: left;
+            padding:10px;
+            line-height:30px;
+            border-radius: 10px;
+            border:1px solid rgb(210, 206, 206);
+            word-wrap:break-word;
+        }
+        .prompt{
+            width:200px;
+            min-height:0px;
+            position: absolute;
+            top:0;
+            left:50%;
+            transform:translateX(-50%)
+        }
+        .give-point{
+            height:0px;
+            width:0px;
+            text-align: center;
+            color:white;
+            background-color: #fa703e;
+            margin-top: 15px;
+            line-height: 50px;
+            transition: .4s;
+            border-radius: 20px;
+            overflow: hidden;
+            transform-origin: center;
+            border:1px solid #d3e9ff;
+            animation: name 2s linear;
+        }
+        @keyframes name{
+            0%{
+                height:0px;
+                width:0px;
+            }
+            10%{
+                height: 50px;
+                width:150px
+            }
+            90%{
+                height: 50px;
+                width:150px
+            }
+            100%{
+                height:0;
+                width:0
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container clearfix" id="container">
+        <div class="prompt" id="toPrompt"></div>
+        <div class="content" id="content"></div>
+        <div class="buttom">
+            <input type="text" name="ipt" id="ipt" placeholder="">
+            <button class="send" id="send">发言</button>
+            <button class="empty" id="empty">清屏</button>
+        </div>
+    </div>
+
+
+
+    <script>
+        send.onclick = function(){
+            if(!ipt.value) {
+                createPrompt()
+                ipt.placeholder="请输入内容"
+                setTimeout(()=>{
+                    ipt.placeholder = ''
+                },1000)
+                return 
+            };
+            const div = document.createElement('div')
+            div.classList.add('myself')
+            // div.innerHTML = ipt.value
+            content.insertAdjacentElement('beforeend',div)
+
+            const mySpeech = document.createElement('div')
+            mySpeech.classList.add('mySpeech')
+            mySpeech.innerHTML = ipt.value
+            div.insertAdjacentElement('beforeend',mySpeech)
+
+            const head = document.createElement('div')
+            head.classList.add('head')
+            div.insertAdjacentElement('beforeend', head)
+
+            ipt.value = null
+        }
+        empty.onclick = function(){
+            ipt.value = null
+            content.innerHTML = null
+        }
+
+        function createPrompt(){
+            const givePoint = document.createElement('div')
+            givePoint.classList.add('give-point')
+            givePoint.innerHTML = '! 请输入内容'
+            toPrompt.insertAdjacentElement('beforeend',givePoint)
+            givePoint.addEventListener('animationend',()=>{
+                console.log('over')
+                toPrompt.removeChild(toPrompt.children[0])
+            })
+        }   
+        
+    </script>
+</body>
+</html>
